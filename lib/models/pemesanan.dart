@@ -3,6 +3,7 @@ class Pemesanan {
   final String userId;
   final String destinasiId;
   final String destinasiNama;
+  final String destinasiGambar; // 1. TAMBAHKAN INI
   final DateTime tanggalKunjungan;
   final int jumlah;
   final double totalHarga;
@@ -15,6 +16,7 @@ class Pemesanan {
     required this.userId,
     required this.destinasiId,
     required this.destinasiNama,
+    required this.destinasiGambar, // 2. TAMBAHKAN JUGA DI SINI
     required this.tanggalKunjungan,
     required this.jumlah,
     required this.totalHarga,
