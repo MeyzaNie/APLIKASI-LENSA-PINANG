@@ -11,7 +11,9 @@ import 'screens/beranda_user.dart';
 import 'screens/beranda_owner.dart';
 import 'screens/beranda_admin.dart';
 import 'screens/splash_screen.dart';
-import 'screens/onboarding_screen.dart'; // Pastikan file ini sudah ada di folder screens
+import 'screens/onboarding_screen.dart';
+// 1. TAMBAHKAN IMPORT INI:
+import 'screens/terms_conditions_screen.dart'; 
 
 void main() {
   runApp(MyApp());
@@ -34,7 +36,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF5A8FCE)),
           useMaterial3: true,
         ),
-        // initialRoute harus ada di daftar routes di bawah
         initialRoute: '/splash', 
         routes: {
           '/splash': (context) => const SplashScreen(),
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
               ),
           '/login': (context) => LoginScreen(),
           '/registrasi': (context) => RegistrasiScreen(),
+          
+          // 2. TAMBAHKAN ROUTE INI:
+          '/terms': (context) => TermsConditionsScreen(), 
         },
       ),
     );
