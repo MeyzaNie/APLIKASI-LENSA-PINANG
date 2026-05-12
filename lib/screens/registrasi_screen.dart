@@ -14,6 +14,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
   String _role = 'user';
   bool _isLoading = false;
 
+  // FUNGSI TETAP SAMA (TIDAK BERUBAH)
   Future<void> _register() async {
     setState(() => _isLoading = true);
     try {
@@ -30,21 +31,92 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Registrasi')),
-      body: Padding(
-        padding: EdgeInsets.all(20),
+      backgroundColor: Colors.white,
+      // AppBar yang lebih modern
+      appBar: AppBar(
+        title: Text('Daftar Akun', style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.blue[800],
+        foregroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView( // Agar tidak error saat keyboard muncul
+        padding: EdgeInsets.all(24),
         child: Column(
           children: [
-            TextField(controller: _namaController, decoration: InputDecoration(labelText: 'Nama')),
-            TextField(controller: _emailController, decoration: InputDecoration(labelText: 'Email')),
-            TextField(controller: _passwordController, obscureText: true, decoration: InputDecoration(labelText: 'Password')),
+            // Header Kecil
+            Icon(Icons.person_add_rounded, size: 80, color: Colors.blue[800]),
+            SizedBox(height: 10),
+            Text("Lensa Pinang", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue[800])),
+            SizedBox(height: 30),
+
+            // Input Nama
+            TextField(
+              controller: _namaController,
+              decoration: InputDecoration(
+                labelText: 'Nama Lengkap',
+                prefixIcon: Icon(Icons.person),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            SizedBox(height: 15),
+
+            // Input Email
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                prefixIcon: Icon(Icons.email),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            SizedBox(height: 15),
+
+            // Input Password
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: Icon(Icons.lock),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            SizedBox(height: 15),
+
+            // Dropdown Role
             DropdownButtonFormField<String>(
               value: _role,
-              items: ['user', 'owner'].map((e) => DropdownMenuItem(value: e, child: Text(e == 'user' ? 'Wisatawan' : 'Pemilik Destinasi'))).toList(),
+              decoration: InputDecoration(
+                labelText: 'Daftar Sebagai',
+                prefixIcon: Icon(Icons.supervised_user_circle),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+              items: ['user', 'owner'].map((e) => DropdownMenuItem(
+                value: e, 
+                child: Text(e == 'user' ? 'Wisatawan' : 'Pemilik Destinasi')
+              )).toList(),
               onChanged: (v) => setState(() => _role = v!),
             ),
-            SizedBox(height: 20),
-            _isLoading ? CircularProgressIndicator() : ElevatedButton(onPressed: _register, child: Text('Daftar')),
+            
+            SizedBox(height: 30),
+
+            // Tombol Daftar
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: _isLoading 
+                ? Center(child: CircularProgressIndicator()) 
+                : ElevatedButton(
+                    onPressed: _register,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[800],
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                    child: Text('DAFTAR', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  ),
+            ),
           ],
         ),
       ),
