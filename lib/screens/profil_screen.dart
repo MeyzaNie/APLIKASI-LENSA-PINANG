@@ -11,8 +11,7 @@ class ProfilScreen extends StatelessWidget {
     final penggunaProvider = Provider.of<PenggunaProvider>(context);
     final currentUser = penggunaProvider.semuaPengguna.firstWhere((u) => u.id == pengguna.id);
 
-    // Hitung tingkat kepatuhan berdasarkan poin penalti lama kamu
-    // Kita asumsikan 100% kepatuhan jika 0 penalti, dan berkurang sesuai jumlah poin
+    // Hitung tingkat kepatuhan berdasarkan poin penalti
     double tingkatKepatuhan = (1.0 - (currentUser.penalti * 0.1)).clamp(0.0, 1.0);
     String persentase = "${(tingkatKepatuhan * 100).toInt()}%";
 
@@ -25,10 +24,17 @@ class ProfilScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              backgroundColor: Colors.blue[50],
-              radius: 18,
-              child: const Text('T&C', style: TextStyle(fontSize: 10, color: Colors.blue, fontWeight: FontWeight.bold)),
+            // PERBAIKAN UTAMA: Menggunakan GestureDetector agar area T&C bisa ditekan
+            child: GestureDetector(
+              onTap: () {
+                // Pastikan route '/terms' sudah ada di main.dart ya
+                Navigator.pushNamed(context, '/terms'); 
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.blue[50],
+                radius: 18,
+                child: const Text('T&C', style: TextStyle(fontSize: 10, color: Colors.blue, fontWeight: FontWeight.bold)),
+              ),
             ),
           )
         ],
@@ -50,7 +56,6 @@ class ProfilScreen extends StatelessWidget {
                   Text(pengguna.nama, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   const Text('Member Sejak Mar 2020', style: TextStyle(color: Colors.grey, fontSize: 13)),
                   const SizedBox(height: 8),
-                  // Badge Peringatan sesuai poin penalti lama
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                     decoration: BoxDecoration(
@@ -82,7 +87,7 @@ class ProfilScreen extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Info No-Show sesuai peraturan lama kamu
+            // Info No-Show
             _buildStatCard(
               title: 'No-show: ${currentUser.penalti}x',
               value: 'Info Penalti',
@@ -93,7 +98,7 @@ class ProfilScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
-                      value: (currentUser.penalti / 5).clamp(0.0, 1.0), 
+                      value: (currentUser.penalti / 3).clamp(0.0, 1.0), 
                       minHeight: 8,
                       backgroundColor: Colors.grey[200],
                       valueColor: const AlwaysStoppedAnimation<Color>(Colors.orange),
