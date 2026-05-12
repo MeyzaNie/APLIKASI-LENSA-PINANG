@@ -18,6 +18,8 @@ class PemesananProvider extends ChangeNotifier {
       userId: userId,
       destinasiId: destinasi.id,
       destinasiNama: destinasi.nama,
+      // PERBAIKAN: Menggunakan 'gambarUrl' sesuai model Destinasi kamu
+      destinasiGambar: destinasi.gambarUrl, 
       tanggalKunjungan: tanggalKunjungan,
       jumlah: jumlah,
       totalHarga: destinasi.harga * jumlah,
