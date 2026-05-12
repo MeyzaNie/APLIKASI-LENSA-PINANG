@@ -10,6 +10,8 @@ import 'screens/registrasi_screen.dart';
 import 'screens/beranda_user.dart';
 import 'screens/beranda_owner.dart';
 import 'screens/beranda_admin.dart';
+import 'screens/splash_screen.dart';
+import 'screens/onboarding_screen.dart'; // Pastikan file ini sudah ada di folder screens
 
 void main() {
   runApp(MyApp());
@@ -26,10 +28,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PenggunaProvider()),
       ],
       child: MaterialApp(
-        title: 'Booking Destinasi',
-        theme: ThemeData(primarySwatch: Colors.green),
-        initialRoute: '/',
+        debugShowCheckedModeBanner: false,
+        title: 'Lensa Pinang',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF5A8FCE)),
+          useMaterial3: true,
+        ),
+        // initialRoute harus ada di daftar routes di bawah
+        initialRoute: '/splash', 
         routes: {
+          '/splash': (context) => const SplashScreen(),
+          '/onboarding': (context) => const OnboardingScreen(),
           '/': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
                   if (auth.pengguna != null) {
