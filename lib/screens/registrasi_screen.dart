@@ -30,47 +30,75 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const Color primaryColor = Color(0xFF4A709C); // Biru kalem minimalis
+
     return Scaffold(
       backgroundColor: Colors.white,
-      // AppBar yang lebih modern
+      // AppBar dibuat flat & bersih senada dengan desain baru
       appBar: AppBar(
-        title: Text('Daftar Akun', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Daftar Akun', 
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+        ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.blue[800],
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey.shade200, height: 1.0),
+        ),
       ),
-      body: SingleChildScrollView( // Agar tidak error saat keyboard muncul
-        padding: EdgeInsets.all(24),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         child: Column(
           children: [
-            // Header Kecil
-            Icon(Icons.person_add_rounded, size: 80, color: Colors.blue[800]),
-            SizedBox(height: 10),
-            Text("Lensa Pinang", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue[800])),
-            SizedBox(height: 30),
+            // Header Kecil Minimalis
+            const Icon(Icons.person_add_rounded, size: 70, color: primaryColor),
+            const SizedBox(height: 12),
+            const Text(
+              "Lensa Pinang", 
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: primaryColor),
+            ),
+            const SizedBox(height: 35),
 
             // Input Nama
             TextField(
               controller: _namaController,
               decoration: InputDecoration(
                 labelText: 'Nama Lengkap',
-                prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                prefixIcon: const Icon(Icons.person_outline, color: primaryColor),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: primaryColor, width: 1.5),
+                ),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 16),
 
             // Input Email
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                prefixIcon: Icon(Icons.email),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                prefixIcon: const Icon(Icons.email_outlined, color: primaryColor),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: primaryColor, width: 1.5),
+                ),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 16),
 
             // Input Password
             TextField(
@@ -78,43 +106,60 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                prefixIcon: Icon(Icons.lock),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                prefixIcon: const Icon(Icons.lock_outline, color: primaryColor),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: primaryColor, width: 1.5),
+                ),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 16),
 
             // Dropdown Role
             DropdownButtonFormField<String>(
               value: _role,
               decoration: InputDecoration(
                 labelText: 'Daftar Sebagai',
-                prefixIcon: Icon(Icons.supervised_user_circle),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                prefixIcon: const Icon(Icons.supervised_user_circle_outlined, color: primaryColor),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: primaryColor, width: 1.5),
+                ),
               ),
               items: ['user', 'owner'].map((e) => DropdownMenuItem(
                 value: e, 
-                child: Text(e == 'user' ? 'Wisatawan' : 'Pemilik Destinasi')
+                child: Text(e == 'user' ? 'Wisatawan' : 'Pemilik Destinasi', style: const TextStyle(fontSize: 14))
               )).toList(),
               onChanged: (v) => setState(() => _role = v!),
             ),
             
-            SizedBox(height: 30),
+            const SizedBox(height: 35),
 
-            // Tombol Daftar
+            // Tombol Daftar Modern
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 48,
               child: _isLoading 
-                ? Center(child: CircularProgressIndicator()) 
+                ? const Center(child: CircularProgressIndicator(color: primaryColor)) 
                 : ElevatedButton(
                     onPressed: _register,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[800],
+                      backgroundColor: primaryColor,
                       foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      elevation: 0, // Flat tanpa bayangan tebal
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    child: Text('DAFTAR', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: const Text('DAFTAR', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1)),
                   ),
             ),
           ],
